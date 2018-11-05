@@ -64,12 +64,15 @@ public class TwitterProject
 	{
 		try 
 		{
-			bw.write("Ingrese texto\n");
-			bw.flush();
-			String text = br.readLine();
-			bw.flush();
-			WordsCounter(text);
-			bw.flush();
+			for (int i = 0; i < 21;i++) 
+			{
+				bw.write("Ingrese tweet\n");
+				bw.flush();
+				String text = br.readLine();
+				bw.flush();
+				WordsCounter(text);
+				bw.flush();
+			}
 		}
 		catch (Exception ex)
         {
