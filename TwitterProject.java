@@ -73,7 +73,7 @@ public class TwitterProject
 	 */
 	public static void TopAuthors(String TopAuthors) throws IOException
 	{
-		String topauthors[] = {"@BlackEagle","@NoticiasRCN","@NoticiasCaracolTV","@Win_Sports", "@petrogustavo"};
+		String topauthors[] = {"@BlackEagle","@NoticiasRCN","@NoticiasCaracolTV","@Win_Sports", "@guerra_universitaria"};
 		bw.write("Top Authors\n");
 		for (int i = 0; i < 5; i++) 
 		{
