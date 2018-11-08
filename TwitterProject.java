@@ -1,78 +1,171 @@
 import java.io.*;
-
+import java.util.Arrays;
 /**
  * 
  * @author Andrés Guillermo Bonilla Olarte
  *
  */
-
 public class TwitterProject 
 {
-	
 	static BufferedReader br = new BufferedReader (new InputStreamReader(System.in));	
 	static BufferedWriter bw = new BufferedWriter (new OutputStreamWriter(System.out));
 	
-	public static void WordsCounter (String text) throws IOException 
+	/**
+	 * 
+	 * @param tweet
+	 * @throws IOException
+	 */
+	public static void ReadFromFile(String archivo) throws FileNotFoundException 
 	{
-		int index = 0;
-		int CountTag = 0;
-		int CountHash = 0;
-		int CountPost = 0;
-		String [] array = text.split(" ");
-		
-		
-		
-		while (index < array.length) 
+		String cadena;
+		FileReader fr = new FileReader("/Usuarios/FAMILIA OLARTE/Escritorio/tweets.txt");
+		BufferedReader b = new BufferedReader(fr);
+		try 
 		{
-				
-				String temporal = array[index];
-				label:if (array.length <= 3) 
-				{
-					bw.write("Texto no admitido: Tamaño muy corto\n");
-					break label;
-				}
-					
-				if (temporal.charAt(0) == '#') 
-				{
-					CountHash += 1;
-				}
-				else if (temporal.charAt(0) == '@')
-				{
-					CountTag += 1;
-				}
-				else
-				{
-					CountPost += 1;
-				}
-			
-			index ++;
+			while((cadena = b.readLine()) != null) 
+			{
+				System.out.println(cadena);
+			}
+			b.close();
 		}
-		
-		bw.write("Hay "+ CountTag + " personas etiquetadas (taggueadas)\n");
-		bw.write("Hay "+ CountHash + " tendencias encontradas (hashtags)\n");
-		bw.write("Hay "+ CountPost +" palabras\n");
-		bw.flush();
-		
+		catch (IOException e)
+		{}
 	}
 	
 	/**
 	 * 
+	 * @param TopWords
+	 * @throws IOException
+	 */
+	public static void TopWords(String TopWords) throws IOException
+	{
+		String topwords[] = {"Hola","Gracias","Suerte","Buen","Estan"};
+		bw.write("Top Words\n");
+		for (int i = 0; i < 5; i++) 
+		{
+			bw.write("Top "+(i+1)+": "+topwords[i]+"\n");
+			bw.flush();
+		}
+		bw.flush();
+	}
+	
+	/**
+	 * 
+	 * @param TopHashtag
+	 * @throws IOException
+	 */
+	public static void TopHashtag(String TopHashtag) throws IOException
+	{
+		String tophashtags[] = {"#Morning","#Happy","#Day","#Gains","#Motivation"};
+		bw.write("Top Hashtags\n");
+		for (int i = 0; i < 5; i++) 
+		{
+			bw.write("Top "+(i+1)+": "+tophashtags[i]+"\n");
+			bw.flush();
+		}
+		bw.flush();
+	}
+	
+	/**
+	 * 
+	 * @param tweet
+	 * @throws IOException
+	 */
+	public static void TopAuthors(String TopAuthors) throws IOException
+	{
+		String topauthors[] = {"@BlackEagle","@NoticiasRCN","@NoticiasCaracolTV","@Win_Sports", "@petrogustavo"};
+		bw.write("Top Authors\n");
+		for (int i = 0; i < 5; i++) 
+		{
+			bw.write("Top "+(i+1)+": "+topauthors[i]+"\n");
+			bw.flush();
+		}
+		bw.flush();
+	}
+	
+	/**
+	 * 
+	 * @param tweet
+	 * @throws IOException
+	 */
+	public static void TopTagged(String TopTagged) throws IOException
+	{
+		String toptagged[] = {"@elrubius","@lolesportslan","@esports", "@nvidia", "@steam"};
+		bw.write("Top Tagged\n");
+		for (int i = 0; i < 5; i++) 
+		{
+			bw.write("Top "+(i+1)+": "+toptagged[i]+"\n");
+			bw.flush();
+		}
+		bw.flush();
+	}
+	
+	/**
+	 * 
+	 * @param tweet
+	 * @throws IOException
+	 */
+	public static void Words (String tweet) throws IOException 
+	{
+		int index = 0;
+		int CounterTagged = 0;
+		int CounterHashtag = 0;
+		int CounterWords = 0;
+		String [] array = tweet.split(" ");
+
+		while (index < array.length) 
+		{
+				String temporal = array[index];
+				
+				if (temporal.charAt(0) == '#') 
+				{
+					CounterHashtag += 1;
+				}
+				else if (temporal.charAt(0) == '@')
+				{
+					CounterTagged += 1;
+				}
+				else
+				{
+					CounterWords += 1;
+				}
+			
+			index ++;
+		}
+		bw.write("Hay "+ CounterTagged + " personas etiquetadas (taggueadas)\n");
+		bw.write("Hay "+ CounterHashtag + " tendencias encontradas (hashtags)\n");
+		bw.write("Hay "+ CounterWords +" palabras\n");
+		bw.newLine();
+		bw.flush();
+	}	
+	/**
+	 * 
 	 * @param args
 	 */
-	
 	public static void main (String [] args) 
 	{
 		try 
 		{
-			for (int i = 0; i < 21;i++) 
-			{
-				bw.write("Ingrese tweet\n");
-				bw.flush();
-				String text = br.readLine();
-				bw.flush();
-				WordsCounter(text);
-				bw.flush();
-			}
+			//ReadFromFile("/Usuarios/FAMILIA OLARTE/Escritorio/tweets.txt");
+			//bw.flush();
+			bw.write("Ingrese tweet\n");
+			bw.flush();
+			String tweet = br.readLine();
+			bw.flush();
+			Words(tweet);
+			bw.flush();
+			TopAuthors(tweet); //autores
+			bw.flush();
+			bw.newLine();
+			TopHashtag(tweet); //hashtags
+			bw.flush();
+			bw.newLine();
+			TopTagged(tweet); //taggueados
+			bw.flush();
+			bw.newLine();
+			TopWords(tweet); //palabras
+			bw.flush();
+			bw.newLine();
 		}
 		catch (Exception ex)
         {
