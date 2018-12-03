@@ -4,7 +4,7 @@ import java.io.*;
  * @author Andrés Guillermo Bonilla Olarte
  *
  */
-public class CompraVenta
+public class Acciones
 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -69,7 +69,6 @@ public class CompraVenta
 			bw.write("Ingrese número de semanas: \n"); //Pedir número de semanas
 			bw.flush(); //liberar información
 			int semanas = Integer.parseInt(br.readLine()); //Lee número de semanas
-
 			for (int i = 1; i <= semanas; i++) // Recorre semana tras semana
 			{ 
 				bw.write("Semana " + i + ": Ingrese los valores de la acción durante la semana: \n"); //Pedir valores de la acción
@@ -78,10 +77,27 @@ public class CompraVenta
 				String valores = br.readLine(); //Leer los valores
 				int [] valores_int = valor(valores); // Convierte el String "valores", en un arreglo
 				int compra = dia_compra(valores_int);//Llama la función de compra
-				int venta = dia_venta(valores_int, compra);//Llama la función de venta
-				
-				bw.write("Comprar acción el día " + (compra + 1)+"\n");
-				bw.write("Vender acción el día " + (venta + 1) + " para obtener ganancias\n");
+				int venta = dia_venta(valores_int, compra);//Llama la función de venta+
+				int ganancia_semana = venta - compra;
+				int ganancia_total = 0; 
+				if(compra < venta) 
+				{
+					bw.write("Comprar acción el día " + (compra + 1)+"\n");
+					bw.write("Vender acción el día " + (venta + 1) + " para obtener ganancias\n");
+					bw.flush(); //liberar información
+					bw.write("Ganancia de la semana: "+ganancia_semana+"\n");
+					bw.flush(); //liberar información
+				}
+				else 
+				{
+					bw.write("No se puede realizar la operación\n");
+					bw.flush();
+					bw.write("No se puede vender la acción, y luego comprarla\n");
+					bw.flush();
+				}
+				ganancia_total += ganancia_semana;
+				bw.flush();
+				bw.write("Ganancia total: "+ganancia_total+"\n");
 				bw.flush(); //liberar información
 			}
 		}
